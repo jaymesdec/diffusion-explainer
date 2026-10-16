@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How AI Turns Words Into Pictures — Student Guide</title>
+    <meta name="description" content="A friendly, no-experience-needed guide to how AI image generators turn your words into pictures.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===== HERO ===== -->
+<header class="hero">
+    <div class="wrap">
+        <p class="eyebrow">A no-experience-needed guide</p>
+        <h1>How does AI turn <span class="hl">words</span> into <span class="hl hl2">pictures</span>?</h1>
+        <p class="lede">
+            You type <em>“a cute panda playing the guitar”</em> and a few seconds later&mdash;a picture appears.
+            It can feel like magic. It isn't. Let's take it apart together. No math, no coding, just curiosity. 🧠✨
+        </p>
+        <a class="jump" href="#big-idea">Start exploring ↓</a>
+    </div>
+</header>
+
+<main>
+
+<!-- ===== BIG IDEA ===== -->
+<section id="big-idea" class="section">
+    <div class="wrap">
+        <h2>The big idea in 30 seconds</h2>
+        <p class="section-lede">
+            An AI image maker doesn't "draw" the way you do. It follows a surprising recipe with three steps:
+        </p>
+        <div class="cards">
+            <div class="card">
+                <div class="card-emoji">🔤</div>
+                <h3>1. Read your words</h3>
+                <p>It turns your sentence into a kind of secret code it can understand&mdash;a list of numbers that captures what you <em>mean</em>.</p>
+            </div>
+            <div class="card">
+                <div class="card-emoji">📺</div>
+                <h3>2. Start with static</h3>
+                <p>It begins with a screen of random TV "snow" and slowly cleans it up, step by step, always peeking at your words.</p>
+            </div>
+            <div class="card">
+                <div class="card-emoji">🖼️</div>
+                <h3>3. Make it sharp</h3>
+                <p>When the mess is cleaned up into a tiny rough sketch, it blows that sketch up into a big, crisp picture.</p>
+            </div>
+        </div>
+        <p class="aside">The surprising part is step 2. Let's actually watch it happen. 👇</p>
+    </div>
+</section>
+
+<!-- ===== STATIC TO PICTURE (the star interactive) ===== -->
+<section class="section section-feature">
+    <div class="wrap">
+        <h2>Watch it happen: from static to picture</h2>
+        <p class="section-lede">
+            Below is a <strong>real</strong> example from this AI, frame by frame. Drag the slider (or hit play)
+            to watch it clean up random static into a picture over 50 tiny steps.
+        </p>
+
+        <div class="prompt-picker">
+            <span class="prompt-picker-label">Picture a:</span>
+            <button class="chip-btn is-active" data-prompt="a cute panda playing the guitar" data-label="cute panda playing the guitar">🐼 panda</button>
+            <button class="chip-btn" data-prompt="a cute and adorable bunny, with huge clear eyes, holding a bunch of flowers" data-label="cute bunny with flowers">🐰 bunny</button>
+            <button class="chip-btn" data-prompt="a beautiful cityscape" data-label="beautiful cityscape">🏙️ city</button>
+            <button class="chip-btn" data-prompt="spiderman in space" data-label="spiderman in space">🕷️ spiderman</button>
+        </div>
+
+        <div class="viewer">
+            <div class="viewer-img-wrap">
+                <img id="denoise-img" alt="AI image being cleaned up" />
+                <div id="step-badge" class="step-badge">Step 0 of 50</div>
+            </div>
+            <p id="denoise-caption" class="viewer-caption">Pure random static — the AI hasn't done anything yet.</p>
+            <div class="viewer-controls">
+                <button id="play-btn" class="play-btn">▶ Play</button>
+                <input id="denoise-slider" type="range" min="0" max="50" value="0" step="1" aria-label="Cleanup step" />
+            </div>
+        </div>
+
+        <div class="analogy-box">
+            <h3>🧊 Think of a sculptor</h3>
+            <p>
+                A sculptor starts with a plain block of stone and chips away everything that <em>isn't</em> the statue.
+                The AI does the same thing, but with <strong>randomness instead of stone</strong>. At every step it asks itself:
+                <em>"Which part of this mess doesn't belong in a panda?"</em> and removes a little of it. Do that 50 times and a panda appears.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- ===== STEP 1: WORDS TO CODE ===== -->
+<section class="section">
+    <div class="wrap">
+        <span class="step-tag">Step 1</span>
+        <h2>Your words become a secret code</h2>
+        <p class="section-lede">
+            Computers don't understand sentences the way we do&mdash;they only understand numbers. So the first thing
+            the AI does is chop your sentence into small pieces (called <strong>tokens</strong>), then turn those pieces
+            into numbers that capture their <em>meaning</em>.
+        </p>
+
+        <div class="token-demo">
+            <label for="token-input" class="token-label">Type a short sentence and see it chopped up:</label>
+            <div class="token-input-row">
+                <input id="token-input" type="text" value="a cute panda playing the guitar" maxlength="60" />
+                <button id="token-btn">Chop it up ✂️</button>
+            </div>
+            <div id="token-output" class="token-output" aria-live="polite"></div>
+            <p class="token-note">
+                The AI adds a <code>&lt;start&gt;</code> and <code>&lt;end&gt;</code> marker so it knows where your sentence
+                begins and ends&mdash;like capital letters and a period. (Real AIs sometimes split words into even smaller chunks,
+                but the idea is the same.)
+            </p>
+        </div>
+
+        <div class="analogy-box">
+            <h3>🌍 Like translating to another language</h3>
+            <p>
+                Imagine texting a friend who only reads emoji. You'd translate "I'm happy" into 😄. The AI does something like that,
+                except it translates every word into a long list of numbers. Words with similar meanings
+                (like <em>happy</em> and <em>joyful</em>) get <strong>similar</strong> numbers&mdash;so the AI understands they're related.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- ===== STEP 2: LISTENING (guidance) ===== -->
+<section class="section">
+    <div class="wrap">
+        <span class="step-tag">Step 2, continued</span>
+        <h2>How closely does it listen to you?</h2>
+        <p class="section-lede">
+            While it cleans up the static, the AI keeps checking your words. You can actually turn a dial for
+            <strong>how hard it listens</strong>. Here's the same panda made with three different settings:
+        </p>
+
+        <div class="guidance-grid">
+            <figure>
+                <img src="" data-gs="0.0" alt="Panda made while ignoring the prompt" class="gs-img" />
+                <figcaption><strong>Barely listening</strong><br>Ignores your words, so you get a random blur.</figcaption>
+            </figure>
+            <figure class="is-best">
+                <img src="" data-gs="7.0" alt="Panda made with balanced listening" class="gs-img" />
+                <figcaption><strong>Just right</strong><br>Balances your words with a realistic look. 👍</figcaption>
+            </figure>
+            <figure>
+                <img src="" data-gs="20.0" alt="Panda made while over-focusing on the prompt" class="gs-img" />
+                <figcaption><strong>Obsessing</strong><br>Tries SO hard it gets intense and over-the-top.</figcaption>
+            </figure>
+        </div>
+        <p class="aside">Lesson: more is not always better. There's usually a sweet spot. 🎯</p>
+    </div>
+</section>
+
+<!-- ===== STEP 3: UPSCALE ===== -->
+<section class="section">
+    <div class="wrap">
+        <span class="step-tag">Step 3</span>
+        <h2>Make the little sketch big and sharp</h2>
+        <p class="section-lede">
+            Here's a time-saving trick: the AI does all that slow cleanup work on a <strong>tiny, rough version</strong> of the
+            picture&mdash;because small is fast and cheap. Only at the very end does it blow the sketch up into a big, detailed image.
+        </p>
+        <div class="analogy-box">
+            <h3>📝 Like sketching before painting</h3>
+            <p>
+                An artist scribbles a small thumbnail sketch first to get the idea right, <em>then</em> paints the big canvas.
+                Working small first saves a ton of effort. The AI is just being clever and lazy&mdash;in a good way.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- ===== WHAT YOU CAN CHANGE ===== -->
+<section class="section">
+    <div class="wrap">
+        <h2>Three things <em>you</em> get to control</h2>
+        <div class="control-list">
+            <div class="control-item">
+                <span class="control-emoji">✍️</span>
+                <div>
+                    <h3>Your words (the prompt)</h3>
+                    <p>What you ask for. More detail usually means a better match&mdash;"a dog" vs. "a fluffy golden puppy on a skateboard at sunset."</p>
+                </div>
+            </div>
+            <div class="control-item">
+                <span class="control-emoji">🎲</span>
+                <div>
+                    <h3>The seed (the starting static)</h3>
+                    <p>The AI starts from random static. Change the starting randomness (the "seed") and you get a different picture&mdash;even with the exact same words.</p>
+                </div>
+            </div>
+            <div class="control-item">
+                <span class="control-emoji">🎚️</span>
+                <div>
+                    <h3>How hard it listens (guidance)</h3>
+                    <p>The dial you saw above. Low = loose and dreamy. High = sticks tightly to your words, but can get weird if you crank it too far.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== GO DEEPER ===== -->
+<section class="section section-deeper">
+    <div class="wrap">
+        <h2>Want to see the whole machine? 🔍</h2>
+        <p class="section-lede">
+            When you're ready, open the full <strong>Diffusion Explainer</strong>. It shows every gear turning&mdash;the same
+            three steps you just learned, with all the real details. Open it on a laptop or desktop for the best view.
+        </p>
+        <a class="deeper-btn" href="https://poloclub.github.io/diffusion-explainer/">Open the full Diffusion Explainer →</a>
+    </div>
+</section>
+
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+    <div class="wrap">
+        <p>
+            This student guide is a simplified companion to <strong>Diffusion Explainer</strong>, an interactive tool created by
+            researchers at Georgia Tech and IBM Research: Seongmin Lee, Benjamin Hoover, Hendrik Strobelt, Jay Wang,
+            ShengYun Peng, Austin Wright, Kevin Li, Haekyu Park, Alex Yang, and Polo Chau.
+        </p>
+        <p>The example images on this page come straight from their tool. Made for curious 9th graders. 💛</p>
+    </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
